@@ -8,6 +8,7 @@ namespace ProjektA
         {
             public string Name;
             public decimal Price;
+            
         }
 
         const int _minNrArticles = 1;
@@ -48,10 +49,14 @@ namespace ProjektA
                         Console.WriteLine("Wrong format, try again!");
                         continue;
                     }
-                    article.Name = articleData[0];
-                    if (string.IsNullOrEmpty(articleData[0]) || string.IsNullOrWhiteSpace(articleData[0]))
+                    
+                    if (!string.IsNullOrEmpty(articleData[0]) && !string.IsNullOrWhiteSpace(articleData[0]))
                     {
-                        Console.WriteLine("Name error!");
+                        article.Name = articleData[0];
+                    }
+                    else
+                    {
+                        Console.WriteLine("Name error");
                         continue;
                     }
 
@@ -91,11 +96,11 @@ namespace ProjektA
 
             decimal totalPrice = 0;
 
-            for (int i = 1; i <= nrArticles; i++)
+            for (int i = 0; i < nrArticles; i++)
 
             {
-                totalPrice = totalPrice + articles[i - 1].Price;
-                Console.WriteLine($"{i,-7} {articles[i - 1].Name,-30} {articles[i - 1].Price,-200:C2}");
+                totalPrice = totalPrice + articles[i].Price;
+                Console.WriteLine($"{i+1,-7} {articles[i].Name,-30} {articles[i].Price,-200:C2}");
                 //varför måste man ha -1?
 
             }
@@ -111,10 +116,8 @@ namespace ProjektA
         }
         private static bool TryReadNrArticles(string question, out int number, int minInt, int maxInt)
         {
-            number = 0;
-            minInt = 1;
-            maxInt = 10;
-            string sInput;
+           
+           string sInput;
             do
             {
                 Console.WriteLine($"{question} ({minInt}-{maxInt} or Q to quit)?");
