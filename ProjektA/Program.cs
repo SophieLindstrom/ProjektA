@@ -27,30 +27,57 @@ namespace ProjektA
             //User is allowed to quit the program as well.
             bool Continue = TryReadNrArticles($"\nHow many articles do you want? Between 1-10", out nrArticles, _minNrArticles, _maxNrArticles);
 
-            EnterArticles(); //Method that lets the user enters the articles in correct format.
+            EnterArticles(); //Method that lets the user entes the articles in correct format.
             PrintReciept(); //Method that prints out a reciept.
         }
         private static void EnterArticles()
         {
-            string[] input;
+
+            string[] articleData;
+            int counter = 0;
             Article article = new Article();
-
-            for (int i = 0; i < nrArticles; i++)
+            while (counter < nrArticles) //while articles är över 0 så fortsätt loopa
             {
-                Console.WriteLine($"\nPlease enter name and price for article #{i + 1} separeted by ; (example Apple; 2,50):");
-                input = Console.ReadLine().Split(";"); // splits the inputs with ";".
-
-                article.Name = input[0];
-                article.Price = Convert.ToDecimal(input[1]);
-                if (string.IsNullOrEmpty(input[0]) || string.IsNullOrWhiteSpace(input[0]))
+                try
                 {
-                    Console.WriteLine("Wrong name, try again");
-                }
-                
-                articles[i] = article;
+                    Console.WriteLine($"\nPlease enter name and price for article #{counter + 1} separeted by ; (example Apple; 2,50):");
+                    articleData = Console.ReadLine().Split(";"); // splits the inputs with ";".
 
+                    if (articleData.Length != 2)
+                    {
+                        Console.WriteLine("Wrong format, try again!");
+                        continue;
+                    }
+                    article.Name = articleData[0];
+                    if (string.IsNullOrEmpty(articleData[0]) || string.IsNullOrWhiteSpace(articleData[0]))
+                    {
+                        Console.WriteLine("Name error!");
+                        continue;
+                    }
+
+                    bool checkValue = decimal.TryParse(articleData[1], out decimal price);
+                    if(checkValue)
+                    {
+                        article.Price = price;
+                    }
+                       else
+                    {
+                        Console.WriteLine("Price error!");
+                        continue;
+                      
+                    }
+
+                    articles[counter] = article;
+                }
+                catch
+                {
+                    
+                    Console.WriteLine($"Wrong input, try again!");
+                    continue;
+                }
+                counter++;             
+                continue;
             }
-               
 
         }
         private static void PrintReciept()
@@ -64,11 +91,11 @@ namespace ProjektA
 
             decimal totalPrice = 0;
 
-            for (int i = 1; i <= nrArticles; i++) 
+            for (int i = 1; i <= nrArticles; i++)
 
             {
-                totalPrice = totalPrice + articles[i-1].Price;
-                Console.WriteLine($"{i, -7} {articles[i-1].Name,-30} {articles[i-1].Price, -200:C2}");
+                totalPrice = totalPrice + articles[i - 1].Price;
+                Console.WriteLine($"{i,-7} {articles[i - 1].Name,-30} {articles[i - 1].Price,-200:C2}");
                 //varför måste man ha -1?
 
             }
@@ -106,6 +133,8 @@ namespace ProjektA
         }
 
     }
+
     
+
 
 }
