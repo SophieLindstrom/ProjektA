@@ -22,14 +22,14 @@ namespace ProjektA
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Project Part A");
-            Console.WriteLine("Let's print a recepie");
+            Console.WriteLine("Let's print a receipt");
 
             //Checks that user puts correct number of articles within the allowed range, and in the correct format.
             //User is allowed to quit the program as well.
             bool Continue = TryReadNrArticles($"\nHow many articles do you want? Between 1-10", out nrArticles, _minNrArticles, _maxNrArticles);
 
             EnterArticles(); //Method that lets the user entes the articles in correct format.
-            PrintReciept(); //Method that prints out a reciept.
+            PrintReceipt(); //Method that prints out a reciept.
         }
         private static void EnterArticles()
         {
@@ -85,10 +85,10 @@ namespace ProjektA
             }
 
         }
-        private static void PrintReciept()
+        private static void PrintReceipt()
         {
             // Printout our articles
-            Console.WriteLine("\nReciept Purchased Article");
+            Console.WriteLine("\nReceipt Purchased Article");
             Console.WriteLine("Purchase date: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
             Console.WriteLine($"\nNumber of items purchased: {nrArticles}");
@@ -101,17 +101,13 @@ namespace ProjektA
             {
                 totalPrice = totalPrice + articles[i].Price;
                 Console.WriteLine($"{i+1,-7} {articles[i].Name,-30} {articles[i].Price,-200:C2}");
-                //varför måste man ha -1?
+               
 
             }
-            Console.WriteLine();
             Console.WriteLine("------------------------------------------------");
             Console.WriteLine($"Total price: {totalPrice,35:C2}");
             decimal totalVat = totalPrice * _vat;
             Console.WriteLine($"Total VAT: {totalVat,37:C2}");
-            Console.WriteLine();
-
-
 
         }
         private static bool TryReadNrArticles(string question, out int number, int minInt, int maxInt)
