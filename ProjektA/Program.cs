@@ -28,7 +28,7 @@ namespace ProjektA
             //User is allowed to quit the program as well.
             bool Continue = TryReadNrArticles($"\nHow many articles do you want? Between 1-10", out nrArticles, _minNrArticles, _maxNrArticles);
 
-            EnterArticles(); //Method that lets the user entes the articles in correct format.
+            EnterArticles(); //Method that let's the user enter the articles in correct format.
             PrintReceipt(); //Method that prints out a reciept.
         }
         private static void EnterArticles()
@@ -37,7 +37,7 @@ namespace ProjektA
             string[] articleData;
             int counter = 0;
             Article article = new Article();
-            while (counter < nrArticles) //while articles är över 0 så fortsätt loopa
+            while (counter < nrArticles)
             {
                 try
                 {
@@ -50,13 +50,14 @@ namespace ProjektA
                         continue;
                     }
                     
-                    if (!string.IsNullOrEmpty(articleData[0]) && !string.IsNullOrWhiteSpace(articleData[0]))
+                    if (!string.IsNullOrEmpty(articleData[0]) && !string.IsNullOrWhiteSpace(articleData[0])) 
+                        //checks if the string is entered correct
                     {
                         article.Name = articleData[0];
                     }
                     else
                     {
-                        Console.WriteLine("Name error");
+                        Console.WriteLine("Name error!");
                         continue;
                     }
 
@@ -67,7 +68,7 @@ namespace ProjektA
                     }
                        else
                     {
-                        Console.WriteLine("Price error!");
+                        Console.WriteLine("Price error!"); //checks if price is entered in correct format
                         continue;
                       
                     }
@@ -110,6 +111,7 @@ namespace ProjektA
             Console.WriteLine($"Total VAT: {totalVat,37:C2}");
 
         }
+        #region Userinput
         private static bool TryReadNrArticles(string question, out int number, int minInt, int maxInt)
         {
            
@@ -130,10 +132,11 @@ namespace ProjektA
             while ((sInput != "Q" && sInput != "q"));
             return false;
         }
+        #endregion
 
     }
 
-    
+
 
 
 }
